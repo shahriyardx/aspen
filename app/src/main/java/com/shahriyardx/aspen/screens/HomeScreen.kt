@@ -2,6 +2,7 @@ package com.shahriyardx.aspen.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,12 +10,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -52,6 +55,7 @@ fun HomeScreen() {
         ) {
             HomeHeader()
             SearchBar()
+            Tabs()
         }
     }
 }
@@ -111,7 +115,6 @@ fun HomeHeader() {
     }
 }
 
-@Preview
 @Composable
 fun SearchBar() {
     var text by remember { mutableStateOf("") }
@@ -137,4 +140,33 @@ fun SearchBar() {
             focusedIndicatorColor = Color.Transparent,
         )
     )
+}
+
+@Preview
+@Composable
+fun Tabs() {
+    var selectedIndex by remember { mutableIntStateOf(0) }
+    val items = listOf(
+        "Location", "Hotels", "Food", "Adventure", "Attractions", "Activities"
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+    ) {
+        items.forEachIndexed { index, title ->
+            val selected = selectedIndex == index
+            Button(
+                onClick = {
+                    selectedIndex = index
+                }, colors = ButtonDefaults.buttonColors(
+                    containerColor = if (selected) MaterialTheme.colorScheme.surface else Color.Transparent,
+                    contentColor = if (selected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onBackground,
+                )
+            ) {
+                Text(title, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal)
+            }
+        }
+    }
 }
