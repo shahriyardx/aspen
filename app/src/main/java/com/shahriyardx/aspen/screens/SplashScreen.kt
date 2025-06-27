@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shahriyardx.aspen.LocalNavController
 import com.shahriyardx.aspen.R
-import com.shahriyardx.aspen.navigation.Home
 
 @Preview(showSystemUi = true)
 @Composable
@@ -93,12 +92,12 @@ fun SplashScreen() {
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF176FF2),
+                            containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(15.dp),
                         onClick = {
-                            navController.navigate(Home)
+                            navController.navigate("home")
                         },
                     ) {
                         Row(
