@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -62,8 +63,10 @@ fun HomeScreen() {
     }, topBar = {
         Box(
             modifier = Modifier
-                .padding(WindowInsets.statusBars.asPaddingValues())
+                .background(if (scrollState.value > 10) MaterialTheme.colorScheme.background else Color.Transparent)
+                .padding(vertical = 10.dp)
                 .padding(horizontal = 24.dp)
+                .padding(WindowInsets.statusBars.asPaddingValues())
         ) {
             HomeHeader(scrollState = scrollState)
         }
@@ -73,12 +76,12 @@ fun HomeScreen() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surfaceContainerLowest)
                 .padding(horizontal = 24.dp)
-                .padding(top = 20.dp)
                 .padding(innerPadding)
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
 
+            Spacer(modifier = Modifier.height(5.dp))
             SearchBar()
             Tabs()
 
