@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shahriyardx.aspen.LocalNavController
 import com.shahriyardx.aspen.components.BottomNavigationBar
 import com.shahriyardx.aspen.components.SamplePage
-import com.shahriyardx.aspen.screens.HomeScreen
+import com.shahriyardx.aspen.screens.home.HomeScreen
 import com.shahriyardx.aspen.screens.SplashScreen
 
 
