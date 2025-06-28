@@ -6,3 +6,7 @@ import androidx.navigation.NavController
 val LocalNavController = compositionLocalOf<NavController> {
     error("CompositionLocal LocalNavController not present")
 }
+
+val LocalPreferenceHelper = compositionLocalOf<PreferenceHelper> {
+    error("CompositionLocal LocalPreferenceHelper not present")
+}

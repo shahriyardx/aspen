@@ -58,19 +58,20 @@ fun HomeScreen() {
 
     val scrollState = rememberScrollState()
 
-    Scaffold(bottomBar = {
-        BottomNavigationBar()
-    }, topBar = {
-        Box(
-            modifier = Modifier
-                .background(if (scrollState.value > 10) MaterialTheme.colorScheme.background else Color.Transparent)
-                .padding(vertical = 10.dp)
-                .padding(horizontal = 24.dp)
-                .padding(WindowInsets.statusBars.asPaddingValues())
-        ) {
-            HomeHeader(scrollState = scrollState)
+    Scaffold(
+        bottomBar = { BottomNavigationBar() },
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .background(if (scrollState.value > 10) MaterialTheme.colorScheme.background else Color.Transparent)
+                    .padding(vertical = 10.dp)
+                    .padding(horizontal = 24.dp)
+                    .padding(WindowInsets.statusBars.asPaddingValues())
+            ) {
+                HomeHeader(scrollState = scrollState)
+            }
         }
-    }) { innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

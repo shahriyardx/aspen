@@ -36,12 +36,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shahriyardx.aspen.LocalNavController
+import com.shahriyardx.aspen.LocalPreferenceHelper
 import com.shahriyardx.aspen.R
 
 @Preview(showSystemUi = true)
 @Composable
 fun SplashScreen() {
     val navController = LocalNavController.current
+    val preferenceHelper = LocalPreferenceHelper.current
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Box(
@@ -98,6 +100,7 @@ fun SplashScreen() {
                         shape = RoundedCornerShape(15.dp),
                         onClick = {
                             navController.navigate("home")
+                            preferenceHelper.saveString("isFirstVisit", "false")
                         },
                     ) {
                         Row(

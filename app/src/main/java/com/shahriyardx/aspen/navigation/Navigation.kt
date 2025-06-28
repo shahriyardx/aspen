@@ -17,10 +17,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.shahriyardx.aspen.LocalNavController
+import com.shahriyardx.aspen.LocalPreferenceHelper
 import com.shahriyardx.aspen.components.BottomNavigationBar
 import com.shahriyardx.aspen.components.SamplePage
-import com.shahriyardx.aspen.screens.home.HomeScreen
 import com.shahriyardx.aspen.screens.SplashScreen
+import com.shahriyardx.aspen.screens.home.HomeScreen
 
 
 data class NavItem(
@@ -53,9 +54,14 @@ val defaultNavItems = listOf<NavItem>(
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    val preferenceHelper = LocalPreferenceHelper.current
+    val isFirstVisit = preferenceHelper.getString("isFirstVisit", "true") == "true"
 
     CompositionLocalProvider(LocalNavController provides navController) {
-        NavHost(navController = navController, startDestination = "home") {
+        NavHost(
+            navController = navController,
+            startDestination = if (isFirstVisit) "splash" else "home"
+        ) {
             composable("splash") {
                 SplashScreen()
             }
