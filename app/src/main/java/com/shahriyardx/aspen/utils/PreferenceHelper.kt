@@ -1,4 +1,4 @@
-package com.shahriyardx.aspen
+package com.shahriyardx.aspen.utils
 
 import android.content.Context
 import androidx.core.content.edit

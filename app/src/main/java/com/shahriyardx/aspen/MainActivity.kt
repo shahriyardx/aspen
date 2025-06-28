@@ -7,15 +7,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.CompositionLocalProvider
 import com.shahriyardx.aspen.navigation.Navigation
 import com.shahriyardx.aspen.ui.theme.AspenTheme
+import com.shahriyardx.aspen.utils.LaunchDatastore
+import com.shahriyardx.aspen.utils.PreferenceHelper
 
 class MainActivity : ComponentActivity() {
-    private lateinit var preferenceHelper: PreferenceHelper
+    private lateinit var launchDatastore: LaunchDatastore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        preferenceHelper = PreferenceHelper(this)
+        launchDatastore = LaunchDatastore(this)
 
 //        WindowInsetsControllerCompat(window, window.decorView).apply {
 //            hide(WindowInsetsCompat.Type.statusBars())
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AspenTheme(dynamicColor = true) {
-                CompositionLocalProvider(LocalPreferenceHelper provides preferenceHelper) {
+                CompositionLocalProvider(LocalPreferenceHelper provides launchDatastore) {
                     Navigation()
                 }
             }

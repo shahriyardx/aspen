@@ -12,6 +12,12 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +28,9 @@ import com.shahriyardx.aspen.components.BottomNavigationBar
 import com.shahriyardx.aspen.components.SamplePage
 import com.shahriyardx.aspen.screens.SplashScreen
 import com.shahriyardx.aspen.screens.home.HomeScreen
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 
 data class NavItem(
@@ -55,12 +64,19 @@ val defaultNavItems = listOf<NavItem>(
 fun Navigation() {
     val navController = rememberNavController()
     val preferenceHelper = LocalPreferenceHelper.current
-    val isFirstVisit = preferenceHelper.getString("isFirstVisit", "true") == "true"
+    var isFirstVisit by remember { mutableStateOf("") }
 
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(true) {
+        coroutineScope.launch {
+            isFirstVisit = preferenceHelper.getLaunchInfo()
+        }
+    }
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = if (isFirstVisit) "splash" else "home"
+            startDestination = if (isFirstVisit.toBoolean()) "splash" else "home"
         ) {
             composable("splash") {
                 SplashScreen()
