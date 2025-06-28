@@ -24,9 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.savedstate.savedState
 import com.shahriyardx.aspen.LocalNavController
 import com.shahriyardx.aspen.navigation.NavItem
 import com.shahriyardx.aspen.navigation.defaultNavItems
@@ -75,8 +73,7 @@ fun BottomNavigationBar(
                         }
                     }
 
-                }
-            ) {
+                }) {
                 IconButton(onClick = {
                     navController.navigate(item.route)
                 }) {

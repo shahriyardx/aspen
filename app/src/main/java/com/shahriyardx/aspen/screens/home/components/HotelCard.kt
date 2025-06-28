@@ -28,11 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shahriyardx.aspen.R
 import com.shahriyardx.aspen.screens.home.PopularCard
+import com.shahriyardx.aspen.ui.theme.Gold
 
 @Composable
 fun HotelCard(
@@ -61,7 +59,7 @@ fun HotelCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom,
         ) {
-            Column (verticalArrangement = Arrangement.spacedBy(5.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                 Box(
                     modifier = Modifier
                         .clip(CircleShape)
@@ -88,7 +86,7 @@ fun HotelCard(
                         Icon(
                             modifier = Modifier.size(18.dp),
                             imageVector = Icons.Default.Star,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = Gold,
                             contentDescription = "Rating"
                         )
 
@@ -97,11 +95,17 @@ fun HotelCard(
                 }
             }
 
-            IconButton(onClick = {}, colors = IconButtonDefaults.iconButtonColors(
-                containerColor = Color.White,
-                contentColor = Color.Red,
-            )) {
-                Icon(modifier = Modifier.size(20.dp),imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
+            IconButton(
+                onClick = {}, colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Red,
+                )
+            ) {
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorite"
+                )
             }
         }
     }
