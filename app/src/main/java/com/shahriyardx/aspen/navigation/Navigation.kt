@@ -16,7 +16,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
@@ -28,9 +27,6 @@ import com.shahriyardx.aspen.components.BottomNavigationBar
 import com.shahriyardx.aspen.components.SamplePage
 import com.shahriyardx.aspen.screens.SplashScreen
 import com.shahriyardx.aspen.screens.home.HomeScreen
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 
 data class NavItem(
@@ -54,9 +50,7 @@ val defaultNavItems = listOf<NavItem>(
         selectedIcon = Icons.Default.Favorite
     ),
     NavItem(
-        route = "settings",
-        icon = Icons.Outlined.Settings,
-        selectedIcon = Icons.Filled.Settings
+        route = "settings", icon = Icons.Outlined.Settings, selectedIcon = Icons.Filled.Settings
     ),
 )
 
@@ -64,49 +58,49 @@ val defaultNavItems = listOf<NavItem>(
 fun Navigation() {
     val navController = rememberNavController()
     val preferenceHelper = LocalPreferenceHelper.current
-    var isFirstVisit by remember { mutableStateOf("") }
+    var isFirstVisit by remember { mutableStateOf<Boolean?>(null) }
 
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(true) {
-        coroutineScope.launch {
-            isFirstVisit = preferenceHelper.getLaunchInfo()
-        }
+        isFirstVisit = preferenceHelper.getLaunchInfo().toBoolean()
     }
-    CompositionLocalProvider(LocalNavController provides navController) {
-        NavHost(
-            navController = navController,
-            startDestination = if (isFirstVisit.toBoolean()) "splash" else "home"
-        ) {
-            composable("splash") {
-                SplashScreen()
-            }
 
-            composable("home") {
-                HomeScreen()
-            }
-
-            composable("tickets") {
-                Scaffold(bottomBar = {
-                    BottomNavigationBar()
-                }) { innerPadding ->
-                    SamplePage("Tickets")
+    if (isFirstVisit != null) {
+        CompositionLocalProvider(LocalNavController provides navController) {
+            NavHost(
+                navController = navController,
+                startDestination = if (isFirstVisit == true) "splash" else "home"
+            ) {
+                composable("splash") {
+                    SplashScreen()
                 }
-            }
 
-            composable("favourites") {
-                Scaffold(bottomBar = {
-                    BottomNavigationBar()
-                }) { innerPadding ->
-                    SamplePage("Favourites")
+                composable("home") {
+                    HomeScreen()
                 }
-            }
 
-            composable("settings") {
-                Scaffold(bottomBar = {
-                    BottomNavigationBar()
-                }) { innerPadding ->
-                    SamplePage("Settings")
+                composable("tickets") {
+                    Scaffold(bottomBar = {
+                        BottomNavigationBar()
+                    }) { innerPadding ->
+                        SamplePage("Tickets")
+                    }
+                }
+
+                composable("favourites") {
+                    Scaffold(bottomBar = {
+                        BottomNavigationBar()
+                    }) { innerPadding ->
+                        SamplePage("Favourites")
+                    }
+                }
+
+                composable("settings") {
+                    Scaffold(bottomBar = {
+                        BottomNavigationBar()
+                    }) { innerPadding ->
+                        SamplePage("Settings")
+                    }
                 }
             }
         }
